@@ -1,15 +1,12 @@
-@if (card) {
-  <div class="card" (click)="selectCard()">
-    @switch (card.state) {
-      @case (CardState.hidden) {
-        <img src="CardBackBlue.png" alt="Hidden card">
-      }
-      @case (CardState.revealed) {
-        <img [src]="card?.image" [alt]="card?.name">
-      }
-      @default {
-        <img src="EmptyCardSpace.png" alt="Empty">
-      }
-    }
+@if (!card || card.state == CardState.removed) {
+  <div class="card-missing"></div>
+} @else {
+  <div class="card" (click)="cardClicked()" [@cardFlip]="card.state">
+    <div class="face back">
+      <img src="CardBackBlue.png" alt="Hidden card" />
+    </div>
+    <div class="face front">
+      <img [src]="card.image" [alt]="card.name" />
+    </div>
   </div>
 }

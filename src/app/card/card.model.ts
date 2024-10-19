@@ -1,7 +1,7 @@
 export enum CardState {
-  hidden,
-  revealed,
-  removed
+  hidden = 'hidden',
+  revealed = 'revealed',
+  removed = 'removed'
 }
 
 export interface RawCard {
