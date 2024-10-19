@@ -1,1 +1,3 @@
-<app-card [card]="cardList[0]"></app-card>
+@for (card of cardList$ | async; track $index) {
+  <app-card [card]="card"></app-card>
+}
