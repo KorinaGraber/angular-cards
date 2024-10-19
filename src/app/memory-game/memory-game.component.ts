@@ -4,7 +4,7 @@ import { MatAnchor } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CardComponent } from '../card/card.component';
-import Card from '../card/card.model';
+import Card, { CardState } from '../card/card.model';
 import CardShuffleModule, { CardShuffleService } from '../services/card-shuffle.service';
 
 @Component({
@@ -18,6 +18,22 @@ export class MemoryGameComponent {
   cardShuffleService = inject(CardShuffleService);
 
   cardList$: Observable<Card[]> = this.cardShuffleService.getSortedDeck();
+
+  flipCard(card: Card) {
+    if (card) {
+      switch(card.state) {
+        case CardState.hidden:
+          card.state = CardState.revealed;
+          break;
+        case CardState.revealed:
+          card.state = CardState.removed;
+          break;
+        default:
+          card.state = CardState.hidden;
+          break;
+      }
+    }
+  }
 }
 
 export default [

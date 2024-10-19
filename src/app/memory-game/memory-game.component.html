@@ -3,6 +3,6 @@
 </div>
 <div class="card-layout">
   @for (card of cardList$ | async; track $index) {
-    <app-card [card]="card"></app-card>
+    <app-card [card]="card" (cardClicked)="flipCard(card)"></app-card>
   }
 </div>
