@@ -1,4 +1,4 @@
-<div class="game-window" (click)="checkForMatch()">
+<div class="game-window" (click)="resolveMatches()">
   <div class="game-header">
     <a mat-raised-button color="primary" routerLink="..">Back to menu</a>
   </div>
@@ -6,5 +6,8 @@
     @for (card of cardList$ | async; track $index) {
       <app-card [card]="card" (cardClicked)="flipCard(card, $event)"></app-card>
     }
+  </div>
+  <div class="game-footer">
+    <p>{{message}}</p>
   </div>
 </div>

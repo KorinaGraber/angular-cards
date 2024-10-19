@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { CardComponent } from '../card/card.component';
 import Card, { CardState } from '../card/card.model';
 import CardShuffleModule, { CardShuffleService } from '../services/card-shuffle.service';
+import MemoryGameMessages from './memory-game.messages';
 
 @Component({
   selector: 'app-memory-game',
@@ -19,27 +20,37 @@ export class MemoryGameComponent {
   cardList$: Observable<Card[]> = this.cardShuffleService.getSortedDeck();
   firstCard?: Card;
   secondCard?: Card;
+  message: string = MemoryGameMessages.pickACard;
 
   flipCard(card: Card, event: Event) {
     event.stopPropagation();
     if (card && card.state !== CardState.removed) {
       if (this.firstCard && this.secondCard) {
-        this.checkForMatch();
+        this.resolveMatches();
       } else if (this.firstCard) {
         if (this.firstCard.id != card.id) {
           card.state = CardState.revealed;
           this.secondCard = card;
+
+          if (this.checkForMatch()) {
+            this.message = MemoryGameMessages.matchSuccess;
+          } else {
+            this.message = MemoryGameMessages.matchFailure;
+          }
+        } else {
+          this.message = MemoryGameMessages.repickError;
         }
       } else {
         card.state = CardState.revealed;
         this.firstCard = card;
+        this.message = MemoryGameMessages.pickSecondCard;
       }
     }
   }
 
-  checkForMatch() {
+  resolveMatches() {
     if (this.firstCard && this.secondCard) {
-      if (this.firstCard.value == this.secondCard.value) {
+      if (this.checkForMatch()) {
         this.firstCard.state = CardState.removed;
         this.secondCard.state = CardState.removed;
       } else {
@@ -49,7 +60,17 @@ export class MemoryGameComponent {
 
       this.firstCard = undefined;
       this.secondCard = undefined;
+      this.message = MemoryGameMessages.pickACard;
     }
+  }
+
+  checkForMatch(): boolean {
+    if (this.firstCard && this.secondCard) {
+      if (this.firstCard.value == this.secondCard.value) {
+        return true;
+      }
+    }
+    return false;
   }
 }
 

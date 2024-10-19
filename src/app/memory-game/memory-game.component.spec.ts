@@ -3,6 +3,7 @@ import { provideRouter } from '@angular/router';
 import { faker } from '@faker-js/faker'
 import routes, { MemoryGameComponent } from './memory-game.component';
 import Card, { CardState } from '../card/card.model';
+import MemoryGameMessages from './memory-game.messages';
 
 function makeTestCard(value?: number, state?: CardState): Card {
   const testCard = new Card();
@@ -42,11 +43,14 @@ describe('MemoryGameComponent', () => {
   describe('flipCard', () => {
     let fakeEvent: { stopPropagation: jasmine.Spy };
     let checkSpy: jasmine.Spy;
+    let resolveSpy: jasmine.Spy;
 
     beforeEach(() => {
       fakeEvent = { stopPropagation: jasmine.createSpy() };
       checkSpy = jasmine.createSpy();
+      resolveSpy = jasmine.createSpy();
       component.checkForMatch = checkSpy;
+      component.resolveMatches = resolveSpy;
     });
 
     afterEach(() => {
@@ -63,24 +67,50 @@ describe('MemoryGameComponent', () => {
       expect(cardToFlip.state).toBe(CardState.revealed);
       expect(component.firstCard as unknown as Card).toBe(cardToFlip);
       expect(component.secondCard).toBeUndefined();
-      expect(checkSpy).toHaveBeenCalledTimes(0);
+      expect(component.message).toBe(MemoryGameMessages.pickSecondCard);
+      expect(resolveSpy).not.toHaveBeenCalled();
+      expect(checkSpy).not.toHaveBeenCalled();
     });
 
-    it('should reveal the card and assign it to secondCard if one card has been flipped', () => {
-      const firstCard = makeTestCard();
-      component.firstCard = firstCard;
-      component.secondCard = undefined;
-      const cardToFlip = makeTestCard(faker.number.int(), CardState.hidden);
+    describe('pickSecondCard', () => {
+      let firstCard: Card;
+      let cardToFlip: Card;
 
-      component.flipCard(cardToFlip, fakeEvent as any);
+      beforeEach(() => {
+        firstCard = makeTestCard();
+        component.firstCard = firstCard;
+        component.secondCard = undefined;
+        cardToFlip = makeTestCard(faker.number.int(), CardState.hidden);
+      });
 
-      expect(cardToFlip.state).toBe(CardState.revealed);
-      expect(component.firstCard).toBe(firstCard);
-      expect(component.secondCard as unknown as Card).toBe(cardToFlip);
-      expect(checkSpy).toHaveBeenCalledTimes(0);
+      it('should reveal the card and assign it to secondCard if one card has been flipped', () => {
+        component.flipCard(cardToFlip, fakeEvent as any);
+
+        expect(cardToFlip.state).toBe(CardState.revealed);
+        expect(component.firstCard).toBe(firstCard);
+        expect(component.secondCard as unknown as Card).toBe(cardToFlip);
+        expect(resolveSpy).not.toHaveBeenCalled();
+        expect(checkSpy).toHaveBeenCalledTimes(1);
+      });
+
+      it('should show a success message to the user if the cards match', () => {
+        checkSpy.and.returnValue(true);
+
+        component.flipCard(cardToFlip, fakeEvent as any);
+
+        expect(component.message).toBe(MemoryGameMessages.matchSuccess);
+      });
+
+      it('should show a failure message to the user if the cards do not match', () => {
+        checkSpy.and.returnValue(false);
+
+        component.flipCard(cardToFlip, fakeEvent as any);
+
+        expect(component.message).toBe(MemoryGameMessages.matchFailure);
+      });
     });
 
-    it('should do nothing if the first card is being flipped again', () => {
+    it('should show an error if the first card is being flipped again', () => {
       const firstCard = makeTestCard();
       component.firstCard = firstCard;
       component.secondCard = undefined;
@@ -89,7 +119,9 @@ describe('MemoryGameComponent', () => {
 
       expect(component.firstCard).toBe(firstCard);
       expect(component.secondCard).toBeUndefined();
-      expect(checkSpy).toHaveBeenCalledTimes(0);
+      expect(resolveSpy).not.toHaveBeenCalled();
+      expect(component.message).toBe(MemoryGameMessages.repickError);
+      expect(checkSpy).not.toHaveBeenCalled();
     });
 
     describe('check for match', () => {
@@ -106,32 +138,43 @@ describe('MemoryGameComponent', () => {
       it('should check for a match when the first card is picked if both cards are flipped', () => {
         component.flipCard(firstCard, fakeEvent as any);
 
-        expect(checkSpy).toHaveBeenCalledTimes(1);
+        expect(resolveSpy).toHaveBeenCalledTimes(1);
+        expect(checkSpy).not.toHaveBeenCalled();
       });
 
       it('should check for a match when the second card is picked if both cards are flipped', () => {
         component.flipCard(secondCard, fakeEvent as any);
 
-        expect(checkSpy).toHaveBeenCalledTimes(1);
+        expect(resolveSpy).toHaveBeenCalledTimes(1);
+        expect(checkSpy).not.toHaveBeenCalled();
       });
 
       it('should check for a match when a random card is picked if both cards are flipped', () => {
         component.flipCard(makeTestCard(), fakeEvent as any);
 
-        expect(checkSpy).toHaveBeenCalledTimes(1);
+        expect(resolveSpy).toHaveBeenCalledTimes(1);
+        expect(checkSpy).not.toHaveBeenCalled();
       });
     });
   });
 
-  describe('checkForMatch', () => {
+  describe('resolveMatches', () => {
+    let originalMessage: string;
+
+    beforeEach(() => {
+      originalMessage = faker.string.uuid();
+      component.message = originalMessage;
+    });
+
     it('should do nothing if no card has been flipped', () => {
       component.firstCard = undefined;
       component.secondCard = undefined;
 
-      component.checkForMatch();
+      component.resolveMatches();
 
       expect(component.firstCard).toBeUndefined();
       expect(component.secondCard).toBeUndefined();
+      expect(component.message).toBe(originalMessage);
     });
 
     it('should do nothing if one card has been flipped', () => {
@@ -139,10 +182,11 @@ describe('MemoryGameComponent', () => {
       component.firstCard = firstCard;
       component.secondCard = undefined;
 
-      component.checkForMatch();
+      component.resolveMatches();
 
       expect(component.firstCard).toBe(firstCard);
       expect(component.secondCard).toBeUndefined();
+      expect(component.message).toBe(originalMessage);
     });
 
     it('should hide both cards if their values dont match', () => {
@@ -151,12 +195,13 @@ describe('MemoryGameComponent', () => {
       component.firstCard = firstCard;
       component.secondCard = secondCard;
 
-      component.checkForMatch();
+      component.resolveMatches();
 
       expect(firstCard.state).toBe(CardState.hidden);
       expect(secondCard.state).toBe(CardState.hidden);
       expect(component.firstCard).toBeUndefined();
       expect(component.secondCard).toBeUndefined();
+      expect(component.message).toBe(MemoryGameMessages.pickACard);
     });
 
     it('should remove both cards if their values match', () => {
@@ -165,12 +210,56 @@ describe('MemoryGameComponent', () => {
       component.firstCard = firstCard;
       component.secondCard = secondCard;
 
-      component.checkForMatch();
+      component.resolveMatches();
 
       expect(firstCard.state).toBe(CardState.removed);
       expect(secondCard.state).toBe(CardState.removed);
       expect(component.firstCard).toBeUndefined();
       expect(component.secondCard).toBeUndefined();
+      expect(component.message).toBe(MemoryGameMessages.pickACard);
+    });
+  });
+
+  describe('checkForMatches', () => {
+    it('should return false no card has been flipped', () => {
+      component.firstCard = undefined;
+      component.secondCard = undefined;
+
+      const result = component.checkForMatch();
+
+      expect(result).toBeFalse();
+    });
+
+    it('should return false if the second card has been flipped', () => {
+      const firstCard = makeTestCard();
+      component.firstCard = firstCard;
+      component.secondCard = undefined;
+
+      const result = component.checkForMatch();
+
+      expect(result).toBeFalse();
+    });
+
+    it('should return false if the card values dont match', () => {
+      const firstCard = makeTestCard(faker.number.int(), CardState.revealed);
+      const secondCard = makeTestCard(faker.number.int(), CardState.revealed);
+      component.firstCard = firstCard;
+      component.secondCard = secondCard;
+
+      const result = component.checkForMatch();
+
+      expect(result).toBeFalse();
+    });
+
+    it('should return true if the card values match', () => {
+      const firstCard = makeTestCard(faker.number.int(), CardState.revealed);
+      const secondCard = makeTestCard(firstCard.value, CardState.revealed);
+      component.firstCard = firstCard;
+      component.secondCard = secondCard;
+
+      const result = component.checkForMatch();
+
+      expect(result).toBeTrue();
     });
   });
 });
