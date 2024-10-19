@@ -25,7 +25,7 @@ export class MemoryGameComponent {
   gameOver = false;
 
   loadCards(): Observable<Card[]> {
-    return this.cardShuffleService.getSortedDeck()
+    return this.cardShuffleService.getShuffledDeck()
       .pipe(tap(deck => this.cardsRemaining = deck.length));
   }
 

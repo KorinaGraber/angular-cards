@@ -12,12 +12,35 @@ export class CardShuffleService {
       .pipe(map(this.parseJsonCardData));
   }
 
+  getShuffledDeck(): Observable<Card[]> {
+    return this.getSortedDeck()
+      .pipe(map(this.shuffleDeck));
+  }
+
   parseJsonCardData(jsonData: Object): Card[] {
     if (jsonData) {
       const rawList = jsonData as RawCard[];
       return rawList.map(rawCard => new Card(rawCard));
     }
     return [];
+  }
+
+  shuffleDeck(deck: Card[]): Card[] {
+    let currentIndex = deck.length;
+
+    // While there remain elements to shuffle...
+    while (currentIndex != 0) {
+
+      // Pick a remaining element...
+      let randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      // And swap it with the current element.
+      [deck[currentIndex], deck[randomIndex]] = [
+        deck[randomIndex], deck[currentIndex]];
+    }
+
+    return deck;
   }
 }
 
