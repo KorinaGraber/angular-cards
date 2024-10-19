@@ -1,3 +1,15 @@
-<div class="card">
-  <img [src]="card?.image" [alt]="card?.name">
-</div>
+@if (card) {
+  <div class="card" (click)="selectCard()">
+    @switch (card.state) {
+      @case (CardState.hidden) {
+        <img src="CardBackBlue.png" alt="Hidden card">
+      }
+      @case (CardState.revealed) {
+        <img [src]="card?.image" [alt]="card?.name">
+      }
+      @default {
+        <img src="EmptyCardSpace.png" alt="Empty">
+      }
+    }
+  </div>
+}
