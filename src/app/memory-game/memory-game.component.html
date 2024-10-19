@@ -1,3 +1,8 @@
-@for (card of cardList$ | async; track $index) {
-  <app-card [card]="card"></app-card>
-}
+<div class="game-header">
+  <a mat-raised-button color="primary" routerLink="..">Back to menu</a>
+</div>
+<div class="card-layout">
+  @for (card of cardList$ | async; track $index) {
+    <app-card [card]="card"></app-card>
+  }
+</div>

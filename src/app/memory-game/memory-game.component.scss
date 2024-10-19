@@ -1,0 +1,11 @@
+.game-header {
+  display: flex;
+  justify-content: center;
+
+  a { margin: 1em; }
+}
+
+.card-layout {
+  display: flex;
+  flex-wrap: wrap;
+}
