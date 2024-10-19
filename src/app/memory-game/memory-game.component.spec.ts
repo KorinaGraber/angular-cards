@@ -4,6 +4,21 @@ import { faker } from '@faker-js/faker'
 import routes, { MemoryGameComponent } from './memory-game.component';
 import Card, { CardState } from '../card/card.model';
 
+function makeTestCard(value?: number, state?: CardState): Card {
+  const testCard = new Card();
+  testCard.id = faker.number.int();
+
+  if (value) {
+    testCard.value = value;
+  }
+
+  if (state) {
+    testCard.state = state;
+  }
+
+  return testCard;
+}
+
 describe('MemoryGameComponent', () => {
   let component: MemoryGameComponent;
   let fixture: ComponentFixture<MemoryGameComponent>;
@@ -41,8 +56,7 @@ describe('MemoryGameComponent', () => {
     it('should reveal the card and assign it to firstCard if no card has been flipped', () => {
       component.firstCard = undefined;
       component.secondCard = undefined;
-      const cardToFlip = new Card();
-      cardToFlip.state = CardState.hidden;
+      const cardToFlip = makeTestCard(faker.number.int(), CardState.hidden);
 
       component.flipCard(cardToFlip, fakeEvent as any);
 
@@ -53,11 +67,10 @@ describe('MemoryGameComponent', () => {
     });
 
     it('should reveal the card and assign it to secondCard if one card has been flipped', () => {
-      const firstCard = new Card();
+      const firstCard = makeTestCard();
       component.firstCard = firstCard;
       component.secondCard = undefined;
-      const cardToFlip = new Card();
-      cardToFlip.state = CardState.hidden;
+      const cardToFlip = makeTestCard(faker.number.int(), CardState.hidden);
 
       component.flipCard(cardToFlip, fakeEvent as any);
 
@@ -67,13 +80,25 @@ describe('MemoryGameComponent', () => {
       expect(checkSpy).toHaveBeenCalledTimes(0);
     });
 
+    it('should do nothing if the first card is being flipped again', () => {
+      const firstCard = makeTestCard();
+      component.firstCard = firstCard;
+      component.secondCard = undefined;
+
+      component.flipCard(firstCard, fakeEvent as any);
+
+      expect(component.firstCard).toBe(firstCard);
+      expect(component.secondCard).toBeUndefined();
+      expect(checkSpy).toHaveBeenCalledTimes(0);
+    });
+
     describe('check for match', () => {
       let firstCard: Card;
       let secondCard: Card;
 
       beforeEach(() => {
-        firstCard = new Card();
-        secondCard = new Card();
+        firstCard = makeTestCard();
+        secondCard = makeTestCard();
         component.firstCard = firstCard;
         component.secondCard = secondCard;
       });
@@ -91,7 +116,7 @@ describe('MemoryGameComponent', () => {
       });
 
       it('should check for a match when a random card is picked if both cards are flipped', () => {
-        component.flipCard(new Card(), fakeEvent as any);
+        component.flipCard(makeTestCard(), fakeEvent as any);
 
         expect(checkSpy).toHaveBeenCalledTimes(1);
       });
@@ -110,7 +135,7 @@ describe('MemoryGameComponent', () => {
     });
 
     it('should do nothing if one card has been flipped', () => {
-      const firstCard = new Card();
+      const firstCard = makeTestCard();
       component.firstCard = firstCard;
       component.secondCard = undefined;
 
@@ -121,12 +146,8 @@ describe('MemoryGameComponent', () => {
     });
 
     it('should hide both cards if their values dont match', () => {
-      const firstCard = new Card();
-      const secondCard = new Card();
-      firstCard.value = faker.number.int();
-      firstCard.state = CardState.revealed;
-      secondCard.value = faker.number.int();
-      secondCard.state = CardState.revealed;
+      const firstCard = makeTestCard(faker.number.int(), CardState.revealed);
+      const secondCard = makeTestCard(faker.number.int(), CardState.revealed);
       component.firstCard = firstCard;
       component.secondCard = secondCard;
 
@@ -139,12 +160,8 @@ describe('MemoryGameComponent', () => {
     });
 
     it('should remove both cards if their values match', () => {
-      const firstCard = new Card();
-      const secondCard = new Card();
-      firstCard.value = faker.number.int();
-      firstCard.state = CardState.revealed;
-      secondCard.value = firstCard.value;
-      secondCard.state = CardState.revealed;
+      const firstCard = makeTestCard(faker.number.int(), CardState.revealed);
+      const secondCard = makeTestCard(firstCard.value, CardState.revealed);
       component.firstCard = firstCard;
       component.secondCard = secondCard;
 

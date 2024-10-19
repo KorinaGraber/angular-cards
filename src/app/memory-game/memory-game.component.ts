@@ -26,8 +26,10 @@ export class MemoryGameComponent {
       if (this.firstCard && this.secondCard) {
         this.checkForMatch();
       } else if (this.firstCard) {
-        card.state = CardState.revealed;
-        this.secondCard = card;
+        if (this.firstCard.id != card.id) {
+          card.state = CardState.revealed;
+          this.secondCard = card;
+        }
       } else {
         card.state = CardState.revealed;
         this.firstCard = card;
