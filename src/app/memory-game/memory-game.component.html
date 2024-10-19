@@ -1,8 +1,10 @@
-<div class="game-header">
-  <a mat-raised-button color="primary" routerLink="..">Back to menu</a>
-</div>
-<div class="card-layout">
-  @for (card of cardList$ | async; track $index) {
-    <app-card [card]="card" (cardClicked)="flipCard(card)"></app-card>
-  }
+<div class="game-window" (click)="checkForMatch()">
+  <div class="game-header">
+    <a mat-raised-button color="primary" routerLink="..">Back to menu</a>
+  </div>
+  <div class="card-layout">
+    @for (card of cardList$ | async; track $index) {
+      <app-card [card]="card" (cardClicked)="flipCard(card, $event)"></app-card>
+    }
+  </div>
 </div>

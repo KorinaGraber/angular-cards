@@ -16,22 +16,37 @@ import CardShuffleModule, { CardShuffleService } from '../services/card-shuffle.
 })
 export class MemoryGameComponent {
   cardShuffleService = inject(CardShuffleService);
-
   cardList$: Observable<Card[]> = this.cardShuffleService.getSortedDeck();
+  firstCard?: Card;
+  secondCard?: Card;
 
-  flipCard(card: Card) {
-    if (card) {
-      switch(card.state) {
-        case CardState.hidden:
-          card.state = CardState.revealed;
-          break;
-        case CardState.revealed:
-          card.state = CardState.removed;
-          break;
-        default:
-          card.state = CardState.hidden;
-          break;
+  flipCard(card: Card, event: Event) {
+    event.stopPropagation();
+    if (card && card.state !== CardState.removed) {
+      if (this.firstCard && this.secondCard) {
+        this.checkForMatch();
+      } else if (this.firstCard) {
+        card.state = CardState.revealed;
+        this.secondCard = card;
+      } else {
+        card.state = CardState.revealed;
+        this.firstCard = card;
       }
+    }
+  }
+
+  checkForMatch() {
+    if (this.firstCard && this.secondCard) {
+      if (this.firstCard.value == this.secondCard.value) {
+        this.firstCard.state = CardState.removed;
+        this.secondCard.state = CardState.removed;
+      } else {
+        this.firstCard.state = CardState.hidden;
+        this.secondCard.state = CardState.hidden;
+      }
+
+      this.firstCard = undefined;
+      this.secondCard = undefined;
     }
   }
 }

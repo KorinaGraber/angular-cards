@@ -1,7 +1,7 @@
 @if (!card || card.state == CardState.removed) {
   <div class="card-missing"></div>
 } @else {
-  <div class="card" (click)="cardClicked.emit()" [@cardFlip]="card.state">
+  <div class="card" (click)="cardClicked.emit($event)" [@cardFlip]="card.state">
     <div class="face back">
       <img src="CardBackBlue.png" alt="Hidden card" />
     </div>

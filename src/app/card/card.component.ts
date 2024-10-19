@@ -27,6 +27,6 @@ import Card, { CardState } from './card.model';
 })
 export class CardComponent {
   @Input() card?: Card;
-  @Output() cardClicked = new EventEmitter<void>();
+  @Output() cardClicked = new EventEmitter<Event>();
   CardState = CardState;
 }
