@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { faker } from '@faker-js/faker'
+import { allLocales, faker } from '@faker-js/faker'
 import routes, { MemoryGameComponent } from './memory-game.component';
 import Card, { CardState } from '../card/card.model';
 import MemoryGameMessages from './memory-game.messages';
@@ -160,10 +160,13 @@ describe('MemoryGameComponent', () => {
 
   describe('resolveMatches', () => {
     let originalMessage: string;
+    let originalCardsRemaining: number;
 
     beforeEach(() => {
       originalMessage = faker.string.uuid();
       component.message = originalMessage;
+      originalCardsRemaining = faker.number.int();
+      component.cardsRemaining = originalCardsRemaining;
     });
 
     it('should do nothing if no card has been flipped', () => {
@@ -175,6 +178,7 @@ describe('MemoryGameComponent', () => {
       expect(component.firstCard).toBeUndefined();
       expect(component.secondCard).toBeUndefined();
       expect(component.message).toBe(originalMessage);
+      expect(component.cardsRemaining).toBe(originalCardsRemaining);
     });
 
     it('should do nothing if one card has been flipped', () => {
@@ -187,6 +191,7 @@ describe('MemoryGameComponent', () => {
       expect(component.firstCard).toBe(firstCard);
       expect(component.secondCard).toBeUndefined();
       expect(component.message).toBe(originalMessage);
+      expect(component.cardsRemaining).toBe(originalCardsRemaining);
     });
 
     it('should hide both cards if their values dont match', () => {
@@ -202,6 +207,7 @@ describe('MemoryGameComponent', () => {
       expect(component.firstCard).toBeUndefined();
       expect(component.secondCard).toBeUndefined();
       expect(component.message).toBe(MemoryGameMessages.pickACard);
+      expect(component.cardsRemaining).toBe(originalCardsRemaining);
     });
 
     it('should remove both cards if their values match', () => {
@@ -217,6 +223,7 @@ describe('MemoryGameComponent', () => {
       expect(component.firstCard).toBeUndefined();
       expect(component.secondCard).toBeUndefined();
       expect(component.message).toBe(MemoryGameMessages.pickACard);
+      expect(component.cardsRemaining).toBe(originalCardsRemaining - 2);
     });
   });
 

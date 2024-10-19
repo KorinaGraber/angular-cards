@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { MatAnchor } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { CardComponent } from '../card/card.component';
 import Card, { CardState } from '../card/card.model';
 import CardShuffleModule, { CardShuffleService } from '../services/card-shuffle.service';
@@ -17,10 +17,16 @@ import MemoryGameMessages from './memory-game.messages';
 })
 export class MemoryGameComponent {
   cardShuffleService = inject(CardShuffleService);
-  cardList$: Observable<Card[]> = this.cardShuffleService.getSortedDeck();
+  cardList$: Observable<Card[]> = this.loadCards();
   firstCard?: Card;
   secondCard?: Card;
   message: string = MemoryGameMessages.pickACard;
+  cardsRemaining: number = 0;
+
+  loadCards(): Observable<Card[]> {
+    return this.cardShuffleService.getSortedDeck()
+      .pipe(tap(deck => this.cardsRemaining = deck.length));
+  }
 
   flipCard(card: Card, event: Event) {
     event.stopPropagation();
@@ -53,6 +59,7 @@ export class MemoryGameComponent {
       if (this.checkForMatch()) {
         this.firstCard.state = CardState.removed;
         this.secondCard.state = CardState.removed;
+        this.cardsRemaining -= 2;
       } else {
         this.firstCard.state = CardState.hidden;
         this.secondCard.state = CardState.hidden;
