@@ -2,261 +2,365 @@
   {
     "id": 1,
     "name": "Ace of Clubs",
-    "image": "AceOfClubs.png"
+    "image": "AceOfClubs.png",
+    "suit": "Clubs",
+    "value": 1
   },
   {
     "id": 2,
     "name": "Two of Clubs",
-    "image": "TwoOfClubs.png"
+    "image": "TwoOfClubs.png",
+    "suit": "Clubs",
+    "value": 2
   },
   {
     "id": 3,
     "name": "Three of Clubs",
-    "image": "ThreeOfClubs.png"
+    "image": "ThreeOfClubs.png",
+    "suit": "Clubs",
+    "value": 3
   },
   {
     "id": 4,
     "name": "Four of Clubs",
-    "image": "FourOfClubs.png"
+    "image": "FourOfClubs.png",
+    "suit": "Clubs",
+    "value": 4
   },
   {
     "id": 5,
     "name": "Five of Clubs",
-    "image": "FiveOfClubs.png"
+    "image": "FiveOfClubs.png",
+    "suit": "Clubs",
+    "value": 5
   },
   {
     "id": 6,
     "name": "Six of Clubs",
-    "image": "SixOfClubs.png"
+    "image": "SixOfClubs.png",
+    "suit": "Clubs",
+    "value": 6
   },
   {
     "id": 7,
     "name": "Seven of Clubs",
-    "image": "SevenOfClubs.png"
+    "image": "SevenOfClubs.png",
+    "suit": "Clubs",
+    "value": 7
   },
   {
     "id": 8,
     "name": "Eight of Clubs",
-    "image": "EightOfClubs.png"
+    "image": "EightOfClubs.png",
+    "suit": "Clubs",
+    "value": 8
   },
   {
     "id": 9,
     "name": "Nine of Clubs",
-    "image": "NineOfClubs.png"
+    "image": "NineOfClubs.png",
+    "suit": "Clubs",
+    "value": 9
   },
   {
     "id": 10,
     "name": "Ten of Clubs",
-    "image": "TenOfClubs.png"
+    "image": "TenOfClubs.png",
+    "suit": "Clubs",
+    "value": 10
   },
   {
     "id": 11,
     "name": "Jack of Clubs",
-    "image": "JackOfClubs.png"
+    "image": "JackOfClubs.png",
+    "suit": "Clubs",
+    "value": 11
   },
   {
     "id": 12,
     "name": "Queen of Clubs",
-    "image": "QueenOfClubs.png"
+    "image": "QueenOfClubs.png",
+    "suit": "Clubs",
+    "value": 12
   },
   {
     "id": 13,
     "name": "King of Clubs",
-    "image": "KingOfClubs.png"
+    "image": "KingOfClubs.png",
+    "suit": "Clubs",
+    "value": 13
   },
   {
     "id": 14,
     "name": "Ace of Diamonds",
-    "image": "AceOfDiamonds.png"
+    "image": "AceOfDiamonds.png",
+    "suit": "Diamonds",
+    "value": 1
   },
   {
     "id": 15,
     "name": "Two of Diamonds",
-    "image": "TwoOfDiamonds.png"
+    "image": "TwoOfDiamonds.png",
+    "suit": "Diamonds",
+    "value": 2
   },
   {
     "id": 16,
     "name": "Three of Diamonds",
-    "image": "ThreeOfDiamonds.png"
+    "image": "ThreeOfDiamonds.png",
+    "suit": "Diamonds",
+    "value": 3
   },
   {
     "id": 17,
     "name": "Four of Diamonds",
-    "image": "FourOfDiamonds.png"
+    "image": "FourOfDiamonds.png",
+    "suit": "Diamonds",
+    "value": 4
   },
   {
     "id": 18,
     "name": "Five of Diamonds",
-    "image": "FiveOfDiamonds.png"
+    "image": "FiveOfDiamonds.png",
+    "suit": "Diamonds",
+    "value": 5
   },
   {
     "id": 19,
     "name": "Six of Diamonds",
-    "image": "SixOfDiamonds.png"
+    "image": "SixOfDiamonds.png",
+    "suit": "Diamonds",
+    "value": 6
   },
   {
     "id": 20,
     "name": "Seven of Diamonds",
-    "image": "SevenOfDiamonds.png"
+    "image": "SevenOfDiamonds.png",
+    "suit": "Diamonds",
+    "value": 7
   },
   {
     "id": 21,
     "name": "Eight of Diamonds",
-    "image": "EightOfDiamonds.png"
+    "image": "EightOfDiamonds.png",
+    "suit": "Diamonds",
+    "value": 8
   },
   {
     "id": 22,
     "name": "Nine of Diamonds",
-    "image": "NineOfDiamonds.png"
+    "image": "NineOfDiamonds.png",
+    "suit": "Diamonds",
+    "value": 9
   },
   {
     "id": 23,
     "name": "Ten of Diamonds",
-    "image": "TenOfDiamonds.png"
+    "image": "TenOfDiamonds.png",
+    "suit": "Diamonds",
+    "value": 10
   },
   {
     "id": 24,
     "name": "Jack of Diamonds",
-    "image": "JackOfDiamonds.png"
+    "image": "JackOfDiamonds.png",
+    "suit": "Diamonds",
+    "value": 11
   },
   {
     "id": 25,
     "name": "Queen of Diamonds",
-    "image": "QueenOfDiamonds.png"
+    "image": "QueenOfDiamonds.png",
+    "suit": "Diamonds",
+    "value": 12
   },
   {
     "id": 26,
     "name": "King of Diamonds",
-    "image": "KingOfDiamonds.png"
+    "image": "KingOfDiamonds.png",
+    "suit": "Diamonds",
+    "value": 13
   },
   {
     "id": 27,
     "name": "Ace of Spades",
-    "image": "AceOfSpades.png"
+    "image": "AceOfSpades.png",
+    "suit": "Spades",
+    "value": 1
   },
   {
     "id": 28,
     "name": "Two of Spades",
-    "image": "TwoOfSpades.png"
+    "image": "TwoOfSpades.png",
+    "suit": "Spades",
+    "value": 2
   },
   {
     "id": 29,
     "name": "Three of Spades",
-    "image": "ThreeOfSpades.png"
+    "image": "ThreeOfSpades.png",
+    "suit": "Spades",
+    "value": 3
   },
   {
     "id": 30,
     "name": "Four of Spades",
-    "image": "FourOfSpades.png"
+    "image": "FourOfSpades.png",
+    "suit": "Spades",
+    "value": 4
   },
   {
     "id": 31,
     "name": "Five of Spades",
-    "image": "FiveOfSpades.png"
+    "image": "FiveOfSpades.png",
+    "suit": "Spades",
+    "value": 5
   },
   {
     "id": 32,
     "name": "Six of Spades",
-    "image": "SixOfSpades.png"
+    "image": "SixOfSpades.png",
+    "suit": "Spades",
+    "value": 6
   },
   {
     "id": 33,
     "name": "Seven of Spades",
-    "image": "SevenOfSpades.png"
+    "image": "SevenOfSpades.png",
+    "suit": "Spades",
+    "value": 7
   },
   {
     "id": 34,
     "name": "Eight of Spades",
-    "image": "EightOfSpades.png"
+    "image": "EightOfSpades.png",
+    "suit": "Spades",
+    "value": 8
   },
   {
     "id": 35,
     "name": "Nine of Spades",
-    "image": "NineOfSpades.png"
+    "image": "NineOfSpades.png",
+    "suit": "Spades",
+    "value": 9
   },
   {
     "id": 36,
     "name": "Ten of Spades",
-    "image": "TenOfSpades.png"
+    "image": "TenOfSpades.png",
+    "suit": "Spades",
+    "value": 10
   },
   {
     "id": 37,
     "name": "Jack of Spades",
-    "image": "JackOfSpades.png"
+    "image": "JackOfSpades.png",
+    "suit": "Spades",
+    "value": 11
   },
   {
     "id": 38,
     "name": "Queen of Spades",
-    "image": "QueenOfSpades.png"
+    "image": "QueenOfSpades.png",
+    "suit": "Spades",
+    "value": 12
   },
   {
     "id": 39,
     "name": "King of Spades",
-    "image": "KingOfSpades.png"
+    "image": "KingOfSpades.png",
+    "suit": "Spades",
+    "value": 13
   },
   {
     "id": 40,
     "name": "Ace of Hearts",
-    "image": "AceOfHearts.png"
+    "image": "AceOfHearts.png",
+    "suit": "Hearts",
+    "value": 1
   },
   {
     "id": 41,
     "name": "Two of Hearts",
-    "image": "TwoOfHearts.png"
+    "image": "TwoOfHearts.png",
+    "suit": "Hearts",
+    "value": 2
   },
   {
     "id": 42,
     "name": "Three of Hearts",
-    "image": "ThreeOfHearts.png"
+    "image": "ThreeOfHearts.png",
+    "suit": "Hearts",
+    "value": 3
   },
   {
     "id": 43,
     "name": "Four of Hearts",
-    "image": "FourOfHearts.png"
+    "image": "FourOfHearts.png",
+    "suit": "Hearts",
+    "value": 4
   },
   {
     "id": 44,
     "name": "Five of Hearts",
-    "image": "FiveOfHearts.png"
+    "image": "FiveOfHearts.png",
+    "suit": "Hearts",
+    "value": 5
   },
   {
     "id": 45,
     "name": "Six of Hearts",
-    "image": "SixOfHearts.png"
+    "image": "SixOfHearts.png",
+    "suit": "Hearts",
+    "value": 6
   },
   {
     "id": 46,
     "name": "Seven of Hearts",
-    "image": "SevenOfHearts.png"
+    "image": "SevenOfHearts.png",
+    "suit": "Hearts",
+    "value": 7
   },
   {
     "id": 47,
     "name": "Eight of Hearts",
-    "image": "EightOfHearts.png"
+    "image": "EightOfHearts.png",
+    "suit": "Hearts",
+    "value": 8
   },
   {
     "id": 48,
     "name": "Nine of Hearts",
-    "image": "NineOfHearts.png"
+    "image": "NineOfHearts.png",
+    "suit": "Hearts",
+    "value": 9
   },
   {
     "id": 49,
     "name": "Ten of Hearts",
-    "image": "TenOfHearts.png"
+    "image": "TenOfHearts.png",
+    "suit": "Hearts",
+    "value": 10
   },
   {
     "id": 50,
     "name": "Jack of Hearts",
-    "image": "JackOfHearts.png"
+    "image": "JackOfHearts.png",
+    "suit": "Hearts",
+    "value": 11
   },
   {
     "id": 51,
     "name": "Queen of Hearts",
-    "image": "QueenOfHearts.png"
+    "image": "QueenOfHearts.png",
+    "suit": "Hearts",
+    "value": 12
   },
   {
     "id": 52,
     "name": "King of Hearts",
-    "image": "KingOfHearts.png"
+    "image": "KingOfHearts.png",
+    "suit": "Hearts",
+    "value": 13
   }
 ]
