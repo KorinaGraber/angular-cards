@@ -210,20 +210,43 @@ describe('MemoryGameComponent', () => {
       expect(component.cardsRemaining).toBe(originalCardsRemaining);
     });
 
-    it('should remove both cards if their values match', () => {
-      const firstCard = makeTestCard(faker.number.int(), CardState.revealed);
-      const secondCard = makeTestCard(firstCard.value, CardState.revealed);
-      component.firstCard = firstCard;
-      component.secondCard = secondCard;
+    describe('removeCards', () => {
+      let firstCard: Card;
+      let secondCard: Card;
 
-      component.resolveMatches();
+      beforeEach(() => {
+        firstCard = makeTestCard(faker.number.int(), CardState.revealed);
+        secondCard = makeTestCard(firstCard.value, CardState.revealed);
+        component.firstCard = firstCard;
+        component.secondCard = secondCard;
+      });
 
-      expect(firstCard.state).toBe(CardState.removed);
-      expect(secondCard.state).toBe(CardState.removed);
-      expect(component.firstCard).toBeUndefined();
-      expect(component.secondCard).toBeUndefined();
-      expect(component.message).toBe(MemoryGameMessages.pickACard);
-      expect(component.cardsRemaining).toBe(originalCardsRemaining - 2);
+      it('should remove both cards if their values match', () => {
+        component.resolveMatches();
+
+        expect(firstCard.state).toBe(CardState.removed);
+        expect(secondCard.state).toBe(CardState.removed);
+        expect(component.firstCard).toBeUndefined();
+        expect(component.secondCard).toBeUndefined();
+        expect(component.message).toBe(MemoryGameMessages.pickACard);
+        expect(component.cardsRemaining).toBe(originalCardsRemaining - 2);
+      });
+
+      it('should not end the game if there are cards left', () => {
+        component.cardsRemaining = faker.number.int({ min: 3 });
+
+        component.resolveMatches();
+
+        expect(component.gameOver).toBeFalse();
+      });
+
+      it('should end the game if there are no cards left', () => {
+        component.cardsRemaining = 2;
+
+        component.resolveMatches();
+
+        expect(component.gameOver).toBeTrue();
+      });
     });
   });
 

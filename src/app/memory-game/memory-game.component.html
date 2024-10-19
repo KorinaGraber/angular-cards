@@ -2,12 +2,16 @@
   <div class="game-header">
     <a mat-raised-button color="primary" routerLink="..">Back to menu</a>
   </div>
-  <div class="card-layout">
-    @for (card of cardList$ | async; track $index) {
-      <app-card [card]="card" (cardClicked)="flipCard(card, $event)"></app-card>
-    }
-  </div>
-  <div class="game-footer">
-    <p>{{message}}, {{cardsRemaining}} cards remaining</p>
-  </div>
+  @if(gameOver) {
+    <div class="game-over">Congratulations, you won!</div>
+  } @else {
+    <div class="card-layout">
+      @for (card of cardList$ | async; track $index) {
+        <app-card [card]="card" (cardClicked)="flipCard(card, $event)"></app-card>
+      }
+    </div>
+    <div class="game-footer">
+      <p>{{message}}, {{cardsRemaining}} cards remaining</p>
+    </div>
+  }
 </div>

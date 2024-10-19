@@ -22,6 +22,7 @@ export class MemoryGameComponent {
   secondCard?: Card;
   message: string = MemoryGameMessages.pickACard;
   cardsRemaining: number = 0;
+  gameOver = false;
 
   loadCards(): Observable<Card[]> {
     return this.cardShuffleService.getSortedDeck()
@@ -60,6 +61,10 @@ export class MemoryGameComponent {
         this.firstCard.state = CardState.removed;
         this.secondCard.state = CardState.removed;
         this.cardsRemaining -= 2;
+
+        if (this.cardsRemaining <= 0) {
+          this.gameOver = true;
+        }
       } else {
         this.firstCard.state = CardState.hidden;
         this.secondCard.state = CardState.hidden;
